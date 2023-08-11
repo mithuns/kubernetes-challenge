@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: kubernetes-challenge
+  name: kubernetes-challenge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubernetes-challenge
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: kubernetes-challenge
+    spec:
+      containers:
+      - image: kubernetes-challenge:latest
+        name: kubernetes-challenge
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: NAME
+          valueFrom:
+            configMapKeyRef:
+              name: k8s-challenge-cm
+              key: name
+status: {}
